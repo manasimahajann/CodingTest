@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="codeTest">
+
+<head>
+  <script src="angular.min.js"></script>
+  <script src="App.js"></script>
+  <title>Job Applicants Report</title>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.9.1/build/cssreset/cssreset-min.css">
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.9.1/build/cssbase/cssbase-min.css">
+  <style type="text/css">
+    #page {
+      width: 1200px;
+      margin: 30px auto;
+    }
+
+    .job-applicants {
+      width: 100%;
+    }
+
+    .job-name {
+      text-align: center;
+    }
+
+    .applicant-name {
+      width: 150px;
+    }
+  </style>
+</head>
+
+<body ng-controller="TableController">
+  <div id="page">
+    <table class="job-applicants">
+      <thead>
+        <tr>
+          <th>Job</th>
+          <th>Applicant Name</th>
+          <th>Email Address</th>
+          <th>Website</th>
+          <th>Skills</th>
+          <th>Cover Letter Paragraph</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- using ng-repeat-start, getting job names for the applicants -->
+        <tr ng-repeat-start="job in jobs">
+          <td class="job-name" rowspan="5">{{job.name}}</td>
+        </tr>
+          <!-- using ng-repeat, getting applicants information -->
+        <tr ng-repeat-end ng-repeat="applicant in applicants" ng-show="job.id == applicant.job_id">
+          <td class="applicant-name">{{applicant.name}}</td>
+          <td><a ng-href="{{ applicant.email }}">{{ applicant.email }}</a></td>
+          <td><a ng-href="{{ applicant.website }}">{{ applicant.website }}</a></td>
+          <td>
+              <!-- using ng-repeat, gettingcskills related to each applicant -->
+            <div ng-repeat="skill in skills" ng-show="applicant.id == skill.applicant_id" class="column">
+               {{ skill.name }}
+            </div>
+          </td>
+          <td>{{applicant.cover_letter}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6">{{applicants.length}} Applicants, {{skills.length}} Unique Skills</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</body>
+
+</html>
